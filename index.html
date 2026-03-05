@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Markdown Editor</title>
-  <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5/github-markdown.min.css">
   <style>
     * {
       margin: 0;
@@ -17,6 +17,7 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
+      background: #fff;
     }
     
     header {
@@ -40,19 +41,77 @@
       border: 1px solid #d0d7de;
       border-radius: 6px;
       cursor: pointer;
+      font-size: 13px;
     }
     
     .buttons button:hover {
       background: #f3f4f6;
     }
     
+    .toolbar {
+      padding: 8px 16px;
+      background: #fff;
+      border-bottom: 1px solid #d0d7de;
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    
+    .toolbar button {
+      padding: 6px 10px;
+      background: #f6f8fa;
+      border: 1px solid #d0d7de;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    
+    .toolbar button:hover {
+      background: #e7eaed;
+    }
+    
+    .toolbar .separator {
+      width: 1px;
+      height: 24px;
+      background: #d0d7de;
+      margin: 0 4px;
+    }
+    
     main {
       flex: 1;
+      display: flex;
       overflow: hidden;
     }
     
-    #editor {
-      height: 100%;
+    .pane {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .editor-pane {
+      border-right: 1px solid #d0d7de;
+    }
+    
+    textarea {
+      flex: 1;
+      padding: 16px;
+      border: none;
+      resize: none;
+      font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      outline: none;
+      background: #fff;
+      color: #24292f;
+    }
+    
+    #preview {
+      flex: 1;
+      padding: 16px 24px;
+      overflow-y: auto;
+      background: #fff;
     }
     
     footer {
@@ -75,8 +134,38 @@
     </div>
   </header>
   
+  <div class="toolbar">
+    <button id="btn-h1" title="제목 1">H1</button>
+    <button id="btn-h2" title="제목 2">H2</button>
+    <button id="btn-h3" title="제목 3">H3</button>
+    <div class="separator"></div>
+    <button id="btn-bold" title="굵게"><b>B</b></button>
+    <button id="btn-italic" title="이탤릭"><i>I</i></button>
+    <button id="btn-strike" title="취소선"><s>S</s></button>
+    <div class="separator"></div>
+    <button id="btn-ul" title="리스트">• 리스트</button>
+    <button id="btn-ol" title="번호 리스트">1. 리스트</button>
+    <button id="btn-quote" title="인용구">❝ 인용</button>
+    <div class="separator"></div>
+    <button id="btn-link" title="링크">🔗 링크</button>
+    <button id="btn-code" title="코드">&lt;/&gt; 코드</button>
+  </div>
+  
   <main>
-    <div id="editor"></div>
+    <div class="pane editor-pane">
+      <textarea id="editor" placeholder="# 여기에 마크다운을 작성하세요...
+
+## 예시
+
+- 리스트 1
+- 리스트 2
+
+**굵게** *이탤릭*"></textarea>
+    </div>
+    
+    <div class="pane">
+      <div id="preview" class="markdown-body"></div>
+    </div>
   </main>
   
   <footer>
@@ -84,7 +173,8 @@
     <span id="file-path"></span>
   </footer>
   
-  <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@11/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
   <script src="renderer.js"></script>
 </body>
 </html>

@@ -2,6 +2,8 @@
 
 간단하고 빠른 마크다운 에디터
 
+<img width="1781" height="1037" alt="Image" src="https://github.com/user-attachments/assets/4cde7bf3-c912-4800-a6b1-1803ffee6bf9" />
+
 ## ✨ 특징
 
 - ✅ **양쪽 편집 모드** - Markdown / WYSIWYG 전환

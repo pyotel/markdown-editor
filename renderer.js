@@ -3,7 +3,7 @@ let editor;
 
 // Toast UI Editor 초기화
 document.addEventListener('DOMContentLoaded', () => {
-  const { Editor } = toastui;
+  const Editor = toastui.Editor;
   
   editor = new Editor({
     el: document.querySelector('#editor'),

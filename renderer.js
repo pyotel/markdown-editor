@@ -18,8 +18,20 @@ function updatePreview() {
 
 editor.addEventListener('input', updatePreview);
 
-// 자동 리스트 기능
+// TAB 키 처리 (들여쓰기)
 editor.addEventListener('keydown', (e) => {
+  // TAB: 들여쓰기
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    const start = editor.selectionStart;
+    const end = editor.selectionEnd;
+    
+    // TAB 문자 삽입
+    editor.setRangeText('  ', start, end, 'end');
+    return;
+  }
+  
+  // ENTER: 자동 리스트
   if (e.key === 'Enter') {
     const start = editor.selectionStart;
     const text = editor.value;

@@ -51,8 +51,8 @@ function createWindow() {
 
   mainWindow.loadFile('index.html');
   
-  // 개발자 도구 자동 열기
-  mainWindow.webContents.openDevTools();
+  // 개발자 도구 (필요시 주석 해제)
+  // mainWindow.webContents.openDevTools();
 }
 
 app.on('ready', createWindow);

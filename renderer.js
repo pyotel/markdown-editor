@@ -3,9 +3,7 @@ let editor;
 
 // Toast UI Editor 초기화
 document.addEventListener('DOMContentLoaded', () => {
-  const Editor = toastui.Editor;
-  
-  editor = new Editor({
+  editor = new toastui.Editor({
     el: document.querySelector('#editor'),
     height: 'calc(100vh - 100px)',
     initialEditType: 'markdown',

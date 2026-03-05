@@ -50,6 +50,9 @@ function createWindow() {
   Menu.setApplicationMenu(menu);
 
   mainWindow.loadFile('index.html');
+  
+  // 개발자 도구 자동 열기
+  mainWindow.webContents.openDevTools();
 }
 
 app.on('ready', createWindow);

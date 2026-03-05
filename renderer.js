@@ -18,41 +18,6 @@ function updatePreview() {
 
 editor.addEventListener('input', updatePreview);
 
-// 텍스트 삽입 헬퍼
-function insertText(before, after = '') {
-  const start = editor.selectionStart;
-  const end = editor.selectionEnd;
-  const selected = editor.value.substring(start, end);
-  const replacement = before + selected + after;
-  
-  editor.setRangeText(replacement, start, end, 'end');
-  editor.focus();
-  updatePreview();
-}
-
-function insertLine(prefix) {
-  const start = editor.selectionStart;
-  const beforeCursor = editor.value.substring(0, start);
-  const lineStart = beforeCursor.lastIndexOf('\n') + 1;
-  
-  editor.setRangeText(prefix, lineStart, lineStart, 'end');
-  editor.focus();
-  updatePreview();
-}
-
-// 툴바 버튼
-document.getElementById('btn-h1').addEventListener('click', () => insertLine('# '));
-document.getElementById('btn-h2').addEventListener('click', () => insertLine('## '));
-document.getElementById('btn-h3').addEventListener('click', () => insertLine('### '));
-document.getElementById('btn-bold').addEventListener('click', () => insertText('**', '**'));
-document.getElementById('btn-italic').addEventListener('click', () => insertText('*', '*'));
-document.getElementById('btn-strike').addEventListener('click', () => insertText('~~', '~~'));
-document.getElementById('btn-ul').addEventListener('click', () => insertLine('- '));
-document.getElementById('btn-ol').addEventListener('click', () => insertLine('1. '));
-document.getElementById('btn-quote').addEventListener('click', () => insertLine('> '));
-document.getElementById('btn-link').addEventListener('click', () => insertText('[', '](url)'));
-document.getElementById('btn-code').addEventListener('click', () => insertText('`', '`'));
-
 // 자동 리스트 기능
 editor.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
@@ -158,18 +123,6 @@ document.addEventListener('keydown', (e) => {
   if ((e.ctrlKey || e.metaKey) && e.key === 'o') {
     e.preventDefault();
     openFile();
-  }
-  
-  // Ctrl+B: 굵게
-  if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
-    e.preventDefault();
-    insertText('**', '**');
-  }
-  
-  // Ctrl+I: 이탤릭
-  if ((e.ctrlKey || e.metaKey) && e.key === 'i') {
-    e.preventDefault();
-    insertText('*', '*');
   }
 });
 

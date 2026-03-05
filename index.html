@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Markdown Editor</title>
-  <link rel="stylesheet" href="node_modules/github-markdown-css/github-markdown.css">
+  <link rel="stylesheet" href="node_modules/@toast-ui/editor/dist/toastui-editor.css">
   <style>
     * {
       margin: 0;
@@ -48,37 +48,11 @@
     
     main {
       flex: 1;
-      display: flex;
       overflow: hidden;
     }
     
-    .pane {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-    
-    .editor-pane {
-      border-right: 1px solid #d0d7de;
-    }
-    
-    textarea {
-      flex: 1;
-      padding: 16px;
-      border: none;
-      resize: none;
-      font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
-      font-size: 14px;
-      line-height: 1.6;
-      outline: none;
-    }
-    
-    #preview {
-      flex: 1;
-      padding: 16px;
-      overflow-y: auto;
-      background: #fff;
+    #editor {
+      height: 100%;
     }
     
     footer {
@@ -102,21 +76,7 @@
   </header>
   
   <main>
-    <div class="pane editor-pane">
-      <textarea id="editor" placeholder="# 여기에 마크다운을 작성하세요...
-
-## 예시
-
-- 리스트 1
-- 리스트 2
-- 리스트 3
-
-**굵게** *이탤릭*"></textarea>
-    </div>
-    
-    <div class="pane">
-      <div id="preview" class="markdown-body"></div>
-    </div>
+    <div id="editor"></div>
   </main>
   
   <footer>
@@ -124,8 +84,7 @@
     <span id="file-path"></span>
   </footer>
   
-  <script src="node_modules/marked/lib/marked.umd.js"></script>
-  <script src="node_modules/dompurify/dist/purify.min.js"></script>
+  <script src="node_modules/@toast-ui/editor/dist/toastui-editor-all.min.js"></script>
   <script src="renderer.js"></script>
 </body>
 </html>

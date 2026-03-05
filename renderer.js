@@ -1,23 +1,28 @@
 let currentFilePath = null;
-const editor = document.getElementById('editor');
-const preview = document.getElementById('preview');
+let editor;
 
-// Marked 설정
-marked.setOptions({
-  breaks: true,
-  gfm: true
+// Toast UI Editor 초기화
+document.addEventListener('DOMContentLoaded', () => {
+  const { Editor } = toastui;
+  
+  editor = new Editor({
+    el: document.querySelector('#editor'),
+    height: 'calc(100vh - 100px)',
+    initialEditType: 'markdown',
+    previewStyle: 'vertical',
+    initialValue: '# 여기에 마크다운을 작성하세요...\n\n## 예시\n\n- 리스트 1\n- 리스트 2\n- 리스트 3\n\n**굵게** *이탤릭*',
+    usageStatistics: false,
+    toolbarItems: [
+      ['heading', 'bold', 'italic', 'strike'],
+      ['hr', 'quote'],
+      ['ul', 'ol', 'task', 'indent', 'outdent'],
+      ['table', 'image', 'link'],
+      ['code', 'codeblock']
+    ]
+  });
+  
+  updateStatus('준비됨');
 });
-
-// 실시간 미리보기 업데이트
-function updatePreview() {
-  const markdown = editor.value;
-  const html = marked.parse(markdown);
-  const clean = DOMPurify.sanitize(html);
-  preview.innerHTML = clean;
-}
-
-// 입력 이벤트
-editor.addEventListener('input', updatePreview);
 
 // 상태 업데이트
 function updateStatus(msg) {
@@ -32,8 +37,7 @@ function updateFilePath(path) {
 async function openFile() {
   const result = await window.electronAPI.openFile();
   if (result) {
-    editor.value = result.content;
-    updatePreview();
+    editor.setMarkdown(result.content);
     currentFilePath = result.path;
     updateFilePath(result.path);
     updateStatus('파일 열림');
@@ -42,7 +46,7 @@ async function openFile() {
 
 // 파일 저장
 async function saveFile() {
-  const content = editor.value;
+  const content = editor.getMarkdown();
   const result = await window.electronAPI.saveFile({
     path: currentFilePath,
     content: content
@@ -74,7 +78,3 @@ document.addEventListener('keydown', (e) => {
     openFile();
   }
 });
-
-// 초기화
-updatePreview();
-updateStatus('준비됨');

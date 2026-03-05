@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Icon Generator</title>
+</head>
+<body>
+  <canvas id="canvas" width="256" height="256"></canvas>
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // 배경 (진한 파란색)
+    const gradient = ctx.createLinearGradient(0, 0, 256, 256);
+    gradient.addColorStop(0, '#2563eb');
+    gradient.addColorStop(1, '#1e40af');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 256, 256);
+    
+    // M 글자 (마크다운)
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 180px Arial';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('M', 128, 140);
+    
+    // 아래 화살표 (마크다운 의미)
+    ctx.fillStyle = '#60a5fa';
+    ctx.font = 'bold 60px Arial';
+    ctx.fillText('↓', 128, 210);
+    
+    // 다운로드 링크 생성
+    canvas.toBlob(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'icon.png';
+      a.click();
+    });
+  </script>
+</body>
+</html>

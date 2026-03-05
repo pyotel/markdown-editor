@@ -9,6 +9,7 @@ function createWindow() {
     width: 1400,
     height: 900,
     title: 'Markdown Editor',
+    icon: path.join(__dirname, 'icon-256.png'),
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,

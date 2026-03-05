@@ -29,10 +29,15 @@
       "**/*"
     ],
     "win": {
-      "target": "portable"
+      "target": "portable",
+      "icon": "icon.ico"
     },
     "linux": {
-      "target": "AppImage"
+      "target": "AppImage",
+      "icon": "icon-256.png"
+    },
+    "mac": {
+      "icon": "icon.icns"
     }
   }
 }

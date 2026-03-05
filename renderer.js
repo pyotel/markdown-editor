@@ -1,26 +1,23 @@
 let currentFilePath = null;
-let easyMDE;
+const editor = document.getElementById('editor');
+const preview = document.getElementById('preview');
 
-// EasyMDE 초기화
-document.addEventListener('DOMContentLoaded', () => {
-  easyMDE = new EasyMDE({
-    element: document.getElementById('editor'),
-    spellChecker: false,
-    autofocus: true,
-    placeholder: '# 여기에 마크다운을 작성하세요...\n\n## 기능\n\n- 실시간 미리보기\n- 파일 저장/열기\n- 마크다운 문법 도구\n\n```javascript\nconst hello = "World";\n```',
-    toolbar: [
-      'bold', 'italic', 'heading', '|',
-      'quote', 'unordered-list', 'ordered-list', '|',
-      'link', 'image', '|',
-      'preview', 'side-by-side', 'fullscreen', '|',
-      'guide'
-    ],
-    sideBySideFullscreen: false,
-    status: ['lines', 'words', 'cursor']
-  });
-  
-  updateStatus('준비됨');
+// Marked 설정
+marked.setOptions({
+  breaks: true,
+  gfm: true
 });
+
+// 실시간 미리보기 업데이트
+function updatePreview() {
+  const markdown = editor.value;
+  const html = marked.parse(markdown);
+  const clean = DOMPurify.sanitize(html);
+  preview.innerHTML = clean;
+}
+
+// 입력 이벤트
+editor.addEventListener('input', updatePreview);
 
 // 상태 업데이트
 function updateStatus(msg) {
@@ -35,7 +32,8 @@ function updateFilePath(path) {
 async function openFile() {
   const result = await window.electronAPI.openFile();
   if (result) {
-    easyMDE.value(result.content);
+    editor.value = result.content;
+    updatePreview();
     currentFilePath = result.path;
     updateFilePath(result.path);
     updateStatus('파일 열림');
@@ -44,7 +42,7 @@ async function openFile() {
 
 // 파일 저장
 async function saveFile() {
-  const content = easyMDE.value();
+  const content = editor.value;
   const result = await window.electronAPI.saveFile({
     path: currentFilePath,
     content: content
@@ -57,20 +55,9 @@ async function saveFile() {
   }
 }
 
-// 미리보기 토글
-function togglePreview() {
-  const cm = easyMDE.codemirror;
-  if (easyMDE.isSideBySideActive()) {
-    EasyMDE.toggleSideBySide(easyMDE);
-  } else {
-    EasyMDE.toggleSideBySide(easyMDE);
-  }
-}
-
 // 버튼 이벤트
 document.getElementById('btn-open').addEventListener('click', openFile);
 document.getElementById('btn-save').addEventListener('click', saveFile);
-document.getElementById('btn-preview').addEventListener('click', togglePreview);
 
 // 메뉴 이벤트
 window.electronAPI.onMenuOpen(() => openFile());
@@ -87,3 +74,7 @@ document.addEventListener('keydown', (e) => {
     openFile();
   }
 });
+
+// 초기화
+updatePreview();
+updateStatus('준비됨');

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Markdown Editor</title>
-  <link rel="stylesheet" href="node_modules/easymde/dist/easymde.min.css">
+  <link rel="stylesheet" href="node_modules/github-markdown-css/github-markdown.css">
   <style>
     * {
       margin: 0;
@@ -48,20 +48,37 @@
     
     main {
       flex: 1;
+      display: flex;
       overflow: hidden;
     }
     
-    #editor-container {
-      height: 100%;
+    .pane {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
     }
     
-    .EasyMDEContainer {
-      height: 100%;
+    .editor-pane {
+      border-right: 1px solid #d0d7de;
     }
     
-    .CodeMirror {
-      height: calc(100vh - 100px) !important;
+    textarea {
+      flex: 1;
+      padding: 16px;
+      border: none;
+      resize: none;
+      font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
       font-size: 14px;
+      line-height: 1.6;
+      outline: none;
+    }
+    
+    #preview {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      background: #fff;
     }
     
     footer {
@@ -70,6 +87,8 @@
       border-top: 1px solid #d0d7de;
       font-size: 12px;
       color: #57606a;
+      display: flex;
+      gap: 20px;
     }
   </style>
 </head>
@@ -79,22 +98,34 @@
     <div class="buttons">
       <button id="btn-open">📂 열기</button>
       <button id="btn-save">💾 저장</button>
-      <button id="btn-preview">👁️ 미리보기</button>
     </div>
   </header>
   
   <main>
-    <div id="editor-container">
-      <textarea id="editor"></textarea>
+    <div class="pane editor-pane">
+      <textarea id="editor" placeholder="# 여기에 마크다운을 작성하세요...
+
+## 예시
+
+- 리스트 1
+- 리스트 2
+- 리스트 3
+
+**굵게** *이탤릭*"></textarea>
+    </div>
+    
+    <div class="pane">
+      <div id="preview" class="markdown-body"></div>
     </div>
   </main>
   
   <footer>
     <span id="status">준비됨</span>
-    <span id="file-path" style="margin-left: 20px;"></span>
+    <span id="file-path"></span>
   </footer>
   
-  <script src="node_modules/easymde/dist/easymde.min.js"></script>
+  <script src="node_modules/marked/marked.min.js"></script>
+  <script src="node_modules/dompurify/dist/purify.min.js"></script>
   <script src="renderer.js"></script>
 </body>
 </html>
